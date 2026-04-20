@@ -1,14 +1,27 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/HomePage";
+import About from "./pages/About";
 import AnalyzePage from "./pages/AnalyzePage";
-import HomePage from "./pages/HomePage";
+import Footer from "./pages/Footer";
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/analyze" element={<AnalyzePage />} />
-      </Routes>
+      <div className="flex flex-col min-h-screen">
+
+        {/* Pages */}
+        <div className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/analyze" element={<AnalyzePage />} />
+          </Routes>
+        </div>
+
+        {/* Footer always visible */}
+        <Footer />
+
+      </div>
     </Router>
   );
 }
