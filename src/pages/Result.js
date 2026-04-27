@@ -4,15 +4,20 @@ import ProgressRing from "./ProgressRing";
 const Result = () => {
   const { state } = useLocation();
 
-  const data = state || {
-    score: 0,
-    skills: [],
-    missingSkills: [],
-    suggestions: [],
-  };
+  const data = state || {};
 
-  const { score, skills, missingSkills, suggestions } = data;
+  const isError = data.error;
 
+const score = !isError ? Number(data.score) : 0;
+
+  console.log("STATE:", state);
+  console.log("DATA:", data);
+
+  const skills = data.skills || data.matchedSkills || []; // 🔥 FIX
+  const missingSkills = data.missingSkills || [];
+  const suggestions = data.suggestions || [];
+
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#061018] to-[#091f2f] text-white px-6 py-10 relative overflow-hidden">
 
@@ -114,19 +119,11 @@ const Result = () => {
         <div className="flex flex-wrap justify-center gap-4">
 
           <Link
-            to="/upload"
+            to="/analyze"
             className="px-6 py-3 rounded-xl bg-cyan-400 text-black font-semibold hover:opacity-90 transition"
           >
             Re-Upload Resume
           </Link>
-
-          <Link
-            to="/resume-builder"
-            className="px-6 py-3 rounded-xl border border-cyan-400/40 text-cyan-300 hover:bg-cyan-400/10 transition"
-          >
-            Improve Resume
-          </Link>
-
         </div>
 
       </div>
