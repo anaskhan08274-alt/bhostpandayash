@@ -18,7 +18,7 @@ export default function UploadPage() {
     formData.append("file", file);
 
     try {
-      const res = await fetch("https://ghostpanda-backend.onrender.com", {
+      const res = await fetch("https://ghostpanda-backend.onrender.com/upload", {
         method: "POST",
         headers: {
           "x-api-key": "sk_ghostpanda_DIN0022"
