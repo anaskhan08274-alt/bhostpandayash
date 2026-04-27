@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 export default function UploadPage() {
   const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
+
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
@@ -18,24 +21,30 @@ export default function UploadPage() {
     formData.append("file", file);
 
     try {
-      const res = await fetch("https://ghostpanda-backend.onrender.com/upload", {
-        method: "POST",
-        headers: {
-          "x-api-key": "sk_ghostpanda_DIN0022"
-        },
-        body: formData
-      });
+      setLoading(true);
+
+      const res = await fetch(
+        "https://ghostpanda-backend.onrender.com/upload",
+        {
+          method: "POST",
+          headers: {
+            "x-api-key": "sk_ghostpanda_DIN0022"
+          },
+          body: formData
+        }
+      );
 
       const data = await res.json();
-      console.log(data);
 
-      // alert("Score: " + data.score);
+      console.log(data);
 
       navigate("/result", { state: data });
 
     } catch (error) {
       console.error(error);
       alert("Error connecting to server");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,6 +73,7 @@ export default function UploadPage() {
             type="file"
             className="hidden"
             onChange={handleFileChange}
+            disabled={loading}
           />
 
           <div className="text-5xl mb-4">📄</div>
@@ -87,10 +97,20 @@ export default function UploadPage() {
         {/* Button */}
         <button
           onClick={handleAnalyze}
-          className="mt-8 w-full py-3 rounded-xl bg-cyan-400 text-black font-semibold text-lg hover:bg-cyan-300 transition shadow-[0_0_25px_rgba(0,255,255,0.5)]"
+          disabled={loading}
+          className="mt-8 w-full py-3 rounded-xl bg-cyan-400 text-black font-semibold text-lg hover:bg-cyan-300 transition shadow-[0_0_25px_rgba(0,255,255,0.5)] disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          Analyze Resume
+          {loading ? "Analyzing Resume..." : "Analyze Resume"}
         </button>
+
+        {/* Loader */}
+        {loading && (
+          <div className="mt-5 flex justify-center items-center gap-3 text-cyan-300">
+            <div className="w-5 h-5 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin"></div>
+            <span>Please wait...</span>
+          </div>
+        )}
+
       </div>
     </div>
   );
