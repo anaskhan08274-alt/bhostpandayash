@@ -12,7 +12,7 @@ export default function HomePage() {
             <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center text-cyan-400 font-bold">
               <img
                 src="pandaimg.jpeg"
-                class="img-fluid rounded-top"
+                className="img-fluid rounded-top"
                 alt=""
               />
               
