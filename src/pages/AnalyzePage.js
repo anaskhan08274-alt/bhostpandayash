@@ -31,7 +31,6 @@ export default function UploadPage() {
       alert("Please enter a job description for accurate analysis");
       return;
     }
-
     setLoading(true);
 
     const data = new FormData();
@@ -60,19 +59,25 @@ export default function UploadPage() {
       const result = await res.json();
       console.log("API RESPONSE:", result);
 
-      if (result.score !== undefined) {
-        navigate("/result", {
-  state: {
-    ...result,
+     if (result.score !== undefined) {
+  navigate("/result", {
+    state: {
+      score: result.score,
+      keywordScore: result.keywordScore,
+      formatScore: result.formatScore,
+      contentScore: result.contentScore,
+      skills: result.skills,
+      missingSkills: result.missingSkills,
+      suggestions: result.suggestions,
 
-    // 👇 FORM DATA ADD KARO
-    name: formData.userName,
-    email: formData.userEmail,
-    jobTitle: formData.jobTitle,
-    experience: formData.experience
-  }
-});
-      } else {
+      name: formData.userName,
+      email: formData.userEmail,
+      jobTitle: formData.jobTitle,
+      experience: formData.experience
+    }
+  });
+}
+       else {
         alert("Analysis failed: " + (result.message || "Unknown error"));
       }
     } catch (error) {

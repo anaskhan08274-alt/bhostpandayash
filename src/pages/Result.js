@@ -1,17 +1,16 @@
 import { Link, useLocation } from "react-router-dom";
 import ProgressRing from "./ProgressRing";
 
+
 const Result = () => {
   const { state } = useLocation();
   const data = state || {};
-  
-
   const isError = data.error || data.score === undefined;
   const score = Number(data.score ?? 0);
   const keywordScore = Number(data.keywordScore ?? 0);
   const formatScore = Number(data.formatScore ?? 0);
   const contentScore = Number(data.contentScore ?? 0);
-
+console.log("SCORE:", score);
   const skills = data.skills || data.matchedSkills || [];
   const missingSkills = data.missingSkills || [];
   const suggestions = data.suggestions || [];
@@ -94,9 +93,10 @@ const Result = () => {
           <h2 className="text-gray-300 mb-4 text-lg">
             Overall ATS Compatibility Score
           </h2>
-          <div className="flex justify-center mb-4">
-            <ProgressRing score={score} />
-          </div>
+
+         <div className="flex justify-center items-center mb-6">
+  <ProgressRing score={score} />
+</div>
           <p className={`text-lg font-medium ${getScoreColor(score)}`}>
             {score >= 80
               ? "🌟 Excellent! Your resume is highly optimized for this role."
