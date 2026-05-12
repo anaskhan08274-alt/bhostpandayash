@@ -5,7 +5,6 @@ import ProgressRing from "./ProgressRing";
 const Result = () => {
   const { state } = useLocation();
   const data = state || {};
-  const isError = data.error || data.score === undefined;
   const score = Number(data.score ?? 0);
   const keywordScore = Number(data.keywordScore ?? 0);
   const formatScore = Number(data.formatScore ?? 0);
